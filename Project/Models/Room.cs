@@ -5,9 +5,10 @@ namespace CastleGrimtol.Project.Models
 {
   public class Room : IRoom
   {
-    string Name { get; set; }
-    string Description { get; set; }
-    List<Item> Items { get; set; }
-    Dictionary<string, IRoom> Exits { get; set; }
+    public string Photo { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public List<Item> Items { get; set; }
+    public Dictionary<string, IRoom> Exits { get; set; }
   }
 }

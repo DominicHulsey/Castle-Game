@@ -3,9 +3,12 @@ using CastleGrimtol.Project.Interfaces;
 
 namespace CastleGrimtol.Project.Models
 {
-  public class Item : IItem
+  public class Game
   {
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public Game()
+    {
+
+
+    }
   }
 }
