@@ -15,15 +15,27 @@ namespace CastleGrimtol.Project.Models
       PlayerName = playername;
       switch (playername)
       {
-
+        case "Tyrion":
+          Photo = @"
+hey i'm Tyrion
+";
+          break;
+        case "Jon Snow":
+          Photo = @"
+hey i'm Jon Snow
+";
+          break;
+        case "Daenerys":
+          Photo = @"
+hey i'm Daenerys
+";
+          break;
       }
     }
+    public void addItem(Item item)
+    {
+      Inventory.Add(item);
+    }
 
-  }
-  enum Players
-  {
-    Tyrion,
-    JonSnow,
-    Daenerys
   }
 }

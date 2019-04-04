@@ -8,7 +8,7 @@ namespace CastleGrimtol
     public static void Main(string[] args)
     {
       GameService newGame = new GameService();
-      newGame.Setup();
+      newGame.Begin();
     }
   }
 }

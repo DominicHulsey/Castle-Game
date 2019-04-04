@@ -9,9 +9,8 @@ namespace CastleGrimtol.Project.Interfaces
     Player CurrentPlayer { get; set; }
 
     //Initializes the game, creates rooms, their exits, and add items to rooms
-    void Setup(
-        Player Tyrion = new Player("Tyrion")
-        );
+    void Setup();
+
 
     //Restarts the game 
     void Reset();

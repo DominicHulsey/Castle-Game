@@ -8,11 +8,11 @@ namespace CastleGrimtol.Project
   public class GameService
   // : IGameService
   {
-    Room CurrentRoom { get; set; }
     Player CurrentPlayer { get; set; }
 
     //Initializes the game, creates rooms, their exits, and add items to rooms
-    public void Setup()
+
+    public void Begin()
     {
       Console.Clear();
       System.Console.WriteLine(@"
@@ -62,18 +62,7 @@ namespace CastleGrimtol.Project
       Console.WriteLine("Press Any Key to Continue");
       Console.ReadKey();
       Console.Clear();
-
-    }
-
-    //Restarts the game 
-    // void Reset();
-
-    //Setup and Starts the Game loop
-    public void StartGame()
-    {
-
-      Console.Read();
-      GetUserInput();
+      ChoosePlayer();
     }
 
     public void ChoosePlayer()
@@ -89,23 +78,77 @@ namespace CastleGrimtol.Project
         switch (choice)
         {
           case 1:
+            Console.Clear();
             System.Console.WriteLine("You chose Tyrion");
+            initialize("Tyrion");
             break;
           case 2:
+            Console.Clear();
             System.Console.WriteLine("You chose Jon Snow");
+            initialize("Jon Snow");
             break;
           case 3:
+            Console.Clear();
             System.Console.WriteLine("You chose Daenerys");
+            initialize("Jon Snow");
             break;
         }
       }
     }
+    public void initialize(string playerChoice)
+    {
+      Room room1 = new Room("Room1", "Start");
+      Room room2 = new Room("Room2", "Second Room");
+      Room room3 = new Room("Room3", "Item in here maybe");
+      Room room4 = new Room("Room4", "God only knows what is going on in this room");
+      Room room5 = new Room("Room5", "Almost There");
+      Room room6 = new Room("Room6", "Boom you win congrats");
+
+      Item spork = new Item("Spork", "Pretty self-explanatory");
+
+      room2.addRoomItem(spork);
+
+      Player character = new Player(playerChoice);
+
+      room1.NearbyRoom(Directions.North, room2);
+      room2.NearbyRoom(Directions.East, room3);
+      room3.NearbyRoom(Directions.East, room4);
+      room4.NearbyRoom(Directions.South, room5);
+      room5.NearbyRoom(Directions.South, room6);
+
+      CurrentRoom = room1;
+      StartGame();
+    }
+    public bool playing = true;
+    //Setup and Starts the Game loop
+    public void StartGame()
+    {
+      while (playing)
+      {
+        DrawRoom(CurrentRoom);
+        GetUserInput();
+        // go();
+      }
+      Console.Read();
+      GetUserInput();
+    }
+
+    public void DrawRoom(Room room)
+    {
+      System.Console.WriteLine($"You are in {room.Name}");
+    }
+
+    public Room CurrentRoom { get; set; }
+
+
 
     //Gets the user input and calls the appropriate command
     public void GetUserInput()
     {
 
     }
+
+    // void Reset();
 
     #region Console Commands
 
@@ -117,23 +160,42 @@ namespace CastleGrimtol.Project
 
     //Validate CurrentRoom.Exits contains the desired direction
     //if it does change the CurrentRoom
-    // void Go(string direction);
+    void Go(Directions direction)
+    {
+      if (CurrentRoom.Exits.ContainsKey(direction))
+      {
+        this.CurrentRoom = (Room)CurrentRoom.Exits[direction];
+      }
+      System.Console.WriteLine("Dude there's no door there");
+    }
 
     //When taking an item be sure the item is in the current room 
     //before adding it to the player inventory, Also don't forget to 
     //remove the item from the room it was picked up in
-    // void TakeItem(string itemName);
+    void TakeItem(string itemName)
+    {
+
+    }
 
     //No need to Pass a room since Items can only be used in the CurrentRoom
     //Make sure you validate the item is in the room or player inventory before
     //being able to use the item
-    // void UseItem(string itemName);
+    void UseItem(string itemName)
+    {
+
+    }
 
     //Print the list of items in the players inventory to the console
-    // void Inventory();
+    void Inventory()
+    {
+
+    }
 
     //Display the CurrentRoom Description, Exits, and Items
-    // void Look();
+    void Look(Room room)
+    {
+      System.Console.WriteLine($"{room.Description}, there is a {room.roomItems} in here");
+    }
 
     #endregion
   }
