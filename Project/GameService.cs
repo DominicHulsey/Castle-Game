@@ -67,8 +67,12 @@ namespace CastleGrimtol.Project
 
     public void ChoosePlayer()
     {
-      System.Console.WriteLine("Please Choose Character/n1 = Tyrion, 2 = Jon Snow, 3 = Daenerys");
+      System.Console.WriteLine("Please Choose Character\n1 = Tyrion, 2 = Jon Snow, 3 = Daenerys");
       string input = Console.ReadLine();
+      if (input == "Hodor")
+      {
+        Hodor();
+      }
       if (!Int32.TryParse(input, out int choice) || choice > 3 || choice < 1)
       {
         Console.WriteLine("Please Enter a number from 1 to 3");
@@ -183,6 +187,12 @@ namespace CastleGrimtol.Project
     void UseItem(string itemName)
     {
 
+    }
+
+    void Hodor()
+    {
+      System.Console.WriteLine("Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor Hodor");
+      Hodor();
     }
 
     //Print the list of items in the players inventory to the console
