@@ -12,6 +12,7 @@ namespace CastleGrimtol.Project.Models
 
     public Player(string playername)
     {
+      Inventory = new List<Item>();
       PlayerName = playername;
       switch (playername)
       {
@@ -36,6 +37,5 @@ hey i'm Daenerys
     {
       Inventory.Add(item);
     }
-
   }
 }

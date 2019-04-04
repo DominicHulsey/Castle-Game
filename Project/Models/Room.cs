@@ -9,18 +9,15 @@ namespace CastleGrimtol.Project.Models
     {
       Name = name;
       Description = description;
-      List<Item> inRoomItems = roomItems;
-      Dictionary<Directions, IRoom> currentMoves = Exits;
+      RoomItems = new List<Item>();
+      Exits = new Dictionary<Directions, IRoom>();
     }
 
+    public bool IsLocked = false;
     public string Photo { get; set; }
-    public List<Item> roomItems;
+    public List<Item> RoomItems { get; set; }
     public string Name { get; set; }
-
     public string Description { get; set; }
-
-    public List<Item> Items { get; set; }
-
     public Dictionary<Directions, IRoom> Exits { get; set; }
 
     public void NearbyRoom(Directions direction, IRoom dest)
@@ -30,7 +27,7 @@ namespace CastleGrimtol.Project.Models
 
     public void addRoomItem(Item item)
     {
-      roomItems.Add(item);
+      RoomItems.Add(item);
     }
     public IRoom TraveltoDest(Directions dir)
     {
@@ -44,10 +41,10 @@ namespace CastleGrimtol.Project.Models
   }
   public enum Directions
   {
-    North,
-    South,
-    East,
-    West,
+    north,
+    south,
+    east,
+    west
   }
 
 }

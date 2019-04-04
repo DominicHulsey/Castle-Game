@@ -107,18 +107,41 @@ namespace CastleGrimtol.Project
       Room room4 = new Room("Room4", "God only knows what is going on in this room");
       Room room5 = new Room("Room5", "Almost There");
       Room room6 = new Room("Room6", "Boom you win congrats");
+      room2.IsLocked = true;
 
       Item spork = new Item("Spork", "Pretty self-explanatory");
+      Item dragons = new Item("Dragons", "they do pretty standard dragon stuff");
+      Item wine = new Item("Wine", "May or not be a box of Franzia");
+      Item sword = new Item("Sword", "Like a knife but bigger");
 
       room2.addRoomItem(spork);
 
-      Player character = new Player(playerChoice);
+      Player player = new Player(playerChoice);
+      CurrentPlayer = player;
 
-      room1.NearbyRoom(Directions.North, room2);
-      room2.NearbyRoom(Directions.East, room3);
-      room3.NearbyRoom(Directions.East, room4);
-      room4.NearbyRoom(Directions.South, room5);
-      room5.NearbyRoom(Directions.South, room6);
+      switch (CurrentPlayer.PlayerName.ToLower())
+      {
+        case "tyrion":
+          CurrentPlayer.addItem(wine);
+          break;
+        case "jon snow":
+          CurrentPlayer.addItem(sword);
+          break;
+        case "daenerys":
+          CurrentPlayer.addItem(dragons);
+          break;
+      }
+
+
+      room1.NearbyRoom(Directions.north, room2);
+      room2.NearbyRoom(Directions.east, room3);
+      room2.NearbyRoom(Directions.south, room1);
+      room3.NearbyRoom(Directions.east, room4);
+      room4.NearbyRoom(Directions.west, room3);
+      room4.NearbyRoom(Directions.south, room5);
+      room5.NearbyRoom(Directions.north, room4);
+      room5.NearbyRoom(Directions.south, room6);
+      room6.NearbyRoom(Directions.north, room5);
 
       CurrentRoom = room1;
       StartGame();
@@ -131,46 +154,140 @@ namespace CastleGrimtol.Project
       {
         DrawRoom(CurrentRoom);
         GetUserInput();
-        // go();
       }
-      Console.Read();
-      GetUserInput();
     }
 
     public void DrawRoom(Room room)
     {
       System.Console.WriteLine($"You are in {room.Name}");
+
+      System.Console.WriteLine(@"
+
+
+         +-----------------------------------------+
+         |               Commands:                 |
+         |                                         |
+         |•Go + (North, South, East, West) = Move  |
+         |•Look = look around the room             |
+         |•Inventory = View held items             |
+         |•Take Item = Take item in current room   |
+         |•Use Item - Use item in current room     |
+         |•Quit - Leave game                       |
+         |•Reset - Start a new game                |
+         +-----------------------------------------+
+
+      
+      ");
     }
 
+
+
     public Room CurrentRoom { get; set; }
-
-
-
     //Gets the user input and calls the appropriate command
     public void GetUserInput()
     {
-
+      System.Console.WriteLine($"What would you like to do");
+      string input = System.Console.ReadLine();
+      if (input.ToLower() == "hodor")
+      {
+        Hodor();
+      }
+      RouteInput(input);
+      Console.Clear();
     }
 
-    // void Reset();
+    public void RouteInput(string input)
+    {
+      string[] choice = input.Split(" ");
+      string command = choice[0];
+      string option = "";
+      if (choice.Length > 1)
+      {
+        option = choice[1].ToLower();
+      }
+      switch (command.ToLower())
+      {
+        case "go":
+          Go(option);
+          break;
+        case "look":
+          Look();
+          break;
+        case "inventory":
+          Inventory();
+          break;
+        case "take":
+          TakeItem(option);
+          System.Console.WriteLine($"{option}");
+          break;
+        case "use":
+          break;
+        case "reset":
+          Reset();
+          break;
+        case "quit":
+          Quit();
+          break;
+      }
+
+    }
+    void Reset()
+    {
+      GameService newGame1 = new GameService();
+      newGame1.Begin();
+    }
 
     #region Console Commands
 
     //Stops the application
-    // void Quit();
+    void Quit()
+    {
+      Environment.Exit(0);
+    }
 
     //Should display a list of commands to the console
     // void Help();
 
     //Validate CurrentRoom.Exits contains the desired direction
     //if it does change the CurrentRoom
-    void Go(Directions direction)
+    void Go(string direction)
     {
-      if (CurrentRoom.Exits.ContainsKey(direction))
+      Directions dir;
+      switch (direction)
       {
-        this.CurrentRoom = (Room)CurrentRoom.Exits[direction];
+        case "north":
+          dir = (Directions)Enum.Parse(typeof(Directions), direction);
+          break;
+        case "south":
+          dir = (Directions)Enum.Parse(typeof(Directions), direction);
+          break;
+        case "east":
+          dir = (Directions)Enum.Parse(typeof(Directions), direction);
+          break;
+        case "west":
+          dir = (Directions)Enum.Parse(typeof(Directions), direction);
+          break;
+        default:
+          //INVALID
+          return;
       }
-      System.Console.WriteLine("Dude there's no door there");
+      if (CurrentRoom.Exits.ContainsKey(dir))
+      {
+        if (CurrentRoom.IsLocked == false)
+        {
+          this.CurrentRoom = (Room)CurrentRoom.Exits[dir];
+        }
+        else
+        {
+          System.Console.WriteLine("Door is locked!");
+          GetUserInput();
+        }
+      }
+      else
+      {
+        System.Console.WriteLine("Dude there's no door there.");
+        GetUserInput();
+      }
     }
 
     //When taking an item be sure the item is in the current room 
@@ -178,7 +295,10 @@ namespace CastleGrimtol.Project
     //remove the item from the room it was picked up in
     void TakeItem(string itemName)
     {
-
+      Item toAdd = (CurrentRoom.RoomItems.Find(item => item.Name.ToLower() == itemName.ToLower()));
+      CurrentPlayer.addItem(toAdd);
+      System.Console.WriteLine($"{toAdd.Name} Added to your inventory!");
+      GetUserInput();
     }
 
     //No need to Pass a room since Items can only be used in the CurrentRoom
@@ -198,13 +318,27 @@ namespace CastleGrimtol.Project
     //Print the list of items in the players inventory to the console
     void Inventory()
     {
-
+      Console.Clear();
+      DrawRoom(CurrentRoom);
+      System.Console.WriteLine("\nInventory:\n");
+      CurrentPlayer.Inventory.ForEach(item =>
+      {
+        System.Console.WriteLine($"{item.Name}: {item.Description}\n\n");
+      });
+      GetUserInput();
     }
-
     //Display the CurrentRoom Description, Exits, and Items
-    void Look(Room room)
+    void Look()
     {
-      System.Console.WriteLine($"{room.Description}, there is a {room.roomItems} in here");
+      Console.Clear();
+      DrawRoom(CurrentRoom);
+      System.Console.WriteLine($"{CurrentRoom.Name}, {CurrentRoom.Description}, there are items in here!\n\n");
+      System.Console.WriteLine("Items:");
+      CurrentRoom.RoomItems.ForEach(item =>
+      {
+        System.Console.WriteLine($"{item.Name}: {item.Description}\n");
+      });
+      GetUserInput();
     }
 
     #endregion
