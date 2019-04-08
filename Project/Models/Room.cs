@@ -11,9 +11,13 @@ namespace CastleGrimtol.Project.Models
       Description = description;
       RoomItems = new List<Item>();
       Exits = new Dictionary<Directions, IRoom>();
+      IsLocked = false;
+      ActiveItem = null;
+      Challenge = null;
     }
-
-    public bool IsLocked = false;
+    public Item Challenge { get; set; }
+    public Item ActiveItem { get; set; }
+    public bool IsLocked { get; set; }
     public string Photo { get; set; }
     public List<Item> RoomItems { get; set; }
     public string Name { get; set; }
@@ -25,9 +29,24 @@ namespace CastleGrimtol.Project.Models
       Exits.Add(direction, dest);
     }
 
+    public void addChallenge(Item item)
+    {
+      Challenge = item;
+    }
+
+    public void remChallenge(Item item)
+    {
+      ActiveItem = null;
+    }
+
     public void addRoomItem(Item item)
     {
       RoomItems.Add(item);
+    }
+
+    public void setActive(Item item)
+    {
+      ActiveItem = item;
     }
     public IRoom TraveltoDest(Directions dir)
     {

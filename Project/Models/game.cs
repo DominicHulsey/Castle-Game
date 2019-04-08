@@ -7,8 +7,6 @@ namespace CastleGrimtol.Project.Models
   {
     public Game()
     {
-
-
     }
   }
 }

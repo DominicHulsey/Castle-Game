@@ -37,5 +37,9 @@ hey i'm Daenerys
     {
       Inventory.Add(item);
     }
+    public void removeItem(Item item)
+    {
+      Inventory.Remove(item);
+    }
   }
 }
