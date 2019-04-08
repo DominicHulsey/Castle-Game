@@ -302,7 +302,7 @@ _________        _______________________ _                    ________________ _
         Console.Clear();
         StartGame();
       }
-      else
+      else if (player == "daenerys")
       {
         System.Console.WriteLine("You are Daenerys.");
         Thread.Sleep(sleep);
