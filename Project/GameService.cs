@@ -151,7 +151,7 @@ _________        _______________________ _                    ________________ _
             break;
           case 3:
             Console.Clear();
-            initialize("Jon Snow");
+            initialize("Daenerys");
             break;
         }
       }
@@ -168,13 +168,11 @@ _________        _______________________ _                    ________________ _
       Room room5 = new Room("Wardrobe room", "Huge walk-in closet with lots of clothes and jewelry");
       Room room6 = new Room("Throne Room", "Huge room with the iron throne in the middle of it");
 
-
       Item paper = new Item("Scroll", "says 'whoever has this paper is the rightful king'", "You unroll the scroll and read it to the people in the room.");
       Item key = new Item("Key", "Usually used to open doors", "Key used, it fits and unlocks the door!");
       Item dragons = new Item("Dragons", "they do pretty standard dragon stuff", "Dragons burn the door down");
       Item wine = new Item("Wine", "Half drank bottle of wine", "You drink the wine, and notice a key at the bottom of it. You use the key to unlock the door.");
       Item sword = new Item("Sword", "Like a knife but bigger", "You slice the door handle off");
-
 
       Player player = new Player(playerChoice);
       CurrentPlayer = player;
