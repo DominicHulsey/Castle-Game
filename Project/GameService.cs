@@ -394,7 +394,6 @@ _________        _______________________ _                    ________________ _
         DeathTimer.Elapsed += youDie;
         DeathTimer.Start();
       }
-
       System.Console.WriteLine($"What would you like to do");
       string input = System.Console.ReadLine();
       if (input.ToLower() == "hodor")
@@ -406,15 +405,20 @@ _________        _______________________ _                    ________________ _
     }
     public void youDie(object sender, ElapsedEventArgs e)
     {
-      DeathTimer.Dispose();
-      playing = false;
-      win = false;
-      System.Console.WriteLine("You died a horrible, painful death. Press enter to play again!");
-      System.Console.ReadLine();
-      Reset();
+      if (win == false)
+      {
+        DeathTimer.Dispose();
+        playing = false;
+        win = false;
+        System.Console.WriteLine("You died a horrible, painful death. Press enter to play again!");
+      }
     }
     public void RouteInput(string input)
     {
+      if (playing == false && win == false)
+      {
+        Reset();
+      }
       string[] choice = input.Split(" ");
       string command = choice[0];
       string option = "";
