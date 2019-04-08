@@ -67,6 +67,27 @@ namespace CastleGrimtol.Project
       
       ");
       Console.WriteLine("Press Any Key to Continue");
+      if (OS.ToLower() == "w")
+      {
+        Console.Beep(700, 1100);
+        Console.Beep(475, 1100);
+        Console.Beep(550, 150);
+        Console.Beep(620, 150);
+        Console.Beep(700, 1000);
+        Console.Beep(475, 850);
+        Console.Beep(550, 150);
+        Console.Beep(620, 150);
+        Console.Beep(520, 2000);
+        Console.Beep(620, 1000);
+        Console.Beep(420, 800);
+        Console.Beep(550, 150);
+        Console.Beep(520, 150);
+        Console.Beep(620, 1000);
+        Console.Beep(420, 800);
+        Console.Beep(550, 150);
+        Console.Beep(520, 150);
+        Console.Beep(460, 800);
+      }
       Console.ReadKey();
       Console.Clear();
       ChoosePlayer();
@@ -225,27 +246,6 @@ _________        _______________________ _                    ________________ _
       else
       {
         sleep = 2000;
-        if (OS.ToLower() == "w")
-        {
-          Console.Beep(700, 1100);
-          Console.Beep(475, 1100);
-          Console.Beep(550, 150);
-          Console.Beep(620, 150);
-          Console.Beep(700, 1000);
-          Console.Beep(475, 850);
-          Console.Beep(550, 150);
-          Console.Beep(620, 150);
-          Console.Beep(520, 2000);
-          Console.Beep(620, 1000);
-          Console.Beep(420, 800);
-          Console.Beep(550, 150);
-          Console.Beep(520, 150);
-          Console.Beep(620, 1000);
-          Console.Beep(420, 800);
-          Console.Beep(550, 150);
-          Console.Beep(520, 150);
-          Console.Beep(460, 800);
-        }
       }
 
       if (player == "tyrion")
